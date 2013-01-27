@@ -1,0 +1,7 @@
+img.media-object.mainlist{
+	width:60px;
+	height:70px;
+}
+div.media:hover{
+	background:#eee;
+}

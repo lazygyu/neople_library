@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	script(type='text/javascript',src='/javascripts/request.js')
+	style(type='text/css')
+		li.media img.media-object { width:60px; }
+	div.row-fluid
+		form.span12.form-horizontal
+			legend 도서 구매 신청
+			div.control-group
+				label.control-label(for='search_title) 도서 제목
+				div.controls
+					input(type='text',placeholder='검색어를 입력하세요')#search_title
+					&nbsp;
+					button#btn_searchTitle(type='button').btn.btn-info
+						i.icon-search.icon-white
+						&nbsp;
+						도서 검색
+					span.help-inline powered by yes24
+			div.control-group
+				label.control-label(for='search_results') 검색 결과
+				div.controls
+					ul#search_results.media-list

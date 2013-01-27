@@ -1,0 +1,27 @@
+extends layout
+
+block content
+	div.row-fluid
+		h2.span12
+			- if(book)
+				[#{book.title}]
+			- else
+				찾으시는 책이 없습니다.
+	div.row-fluid
+		img.thumbnail.span4(src='#{book.thumb}')
+		div.span8
+			table.table.table-striped
+				tr
+					th 상태
+					td 
+						- if(book.state == 0)
+							span.label.label-success.label-large 대여가능
+						- else if(book.state == 1)
+							span.label.label-important.label-large 대여중
+						- else if(book.state == 2)
+							span.label.label-warning.label-large 구매 대기중
+				tr
+					th 저자
+					td
+						span #{book.author}
+

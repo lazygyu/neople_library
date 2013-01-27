@@ -1,0 +1,28 @@
+doctype 5
+html
+	head
+		title Neople 도서관
+		link(rel='stylesheet',href='/bootstrap/css/bootstrap.min.css')
+		script(type='text/javascript',src='/javascripts/jquery.min.js')
+		script(type='text/javascript',src='/bootstrap/js/bootstrap.min.js')
+		style(type='text/css')
+			body { padding-top:60px; padding-bottom:40px; }
+			.sidebar-nav { padding:9px 0; }
+	body
+		div#topbar.navbar.navbar-inverse.navbar-fixed-top
+			div.navbar-inner
+				div.container-fluid
+					a.brand(href='/') NeopleLibrary
+					ul.nav
+						li
+							a(href='/') Home
+						li
+							a(href='/list') List
+
+			
+		div#main.container-fluid
+			div.row-fluid
+				div.span2
+					include sidebar.jade
+				div.span10
+					block content

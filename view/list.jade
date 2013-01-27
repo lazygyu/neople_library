@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	script(type='text/javascript',src='/javascripts/list.js')
+	link(rel='stylesheet',href='/stylesheets/list.css')
+	div.row-fluid
+		div.navbar
+			div.navbar-inner
+				a.brand(href='/list') 도서리스트
+				form#searchForm.navbar-search.pull-left
+					input#in_search.search-query(type='text',placeholder='검색어를 입력하세요.')
+				ul.nav
+					li.dropdown
+						a(href='#',data-toggle='dropdown').dropdown-toggle
+							정렬순서
+							b.caret
+						ul.dropdown-menu
+							li
+								a(href='/list/sort/title') 제목순
+								a(href='/list/sort/date') 구매일자순
+								a(href='/list/sort/author') 저자순
+	div#booklist.row-fluid
+		
