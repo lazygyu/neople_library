@@ -12,8 +12,6 @@ var express = require('express')
 var app = express();
 var BookProvider = require('./models/bookProvider').BookProvider;
 var bookProvider = new BookProvider();
-var Yes24 = require('./models/yes24').Yes24;
-var yes24 = new Yes24();
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -75,12 +73,6 @@ app.get(/^\/api\/([^\/]+)\/?(.*)/, function(req, res){
 					res.send(books);
 				});
 			}
-		break;
-		case 'y24':
-			var params = req.params[1].split('/');
-			yes24.search(params[0], function(err, lists, headers){
-				res.send(lists);		
-			});
 		break;
 		default:
 			next();
