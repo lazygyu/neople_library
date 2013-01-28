@@ -21,6 +21,17 @@ BookProvider.prototype.findById = function(id, cb){
 	cb(null, result);
 }
 
+BookProvider.prototype.findByISBN = function(isbn, cb){
+	var result = null;
+	for(var i=0;i<this.dummyData.length;i++){
+		if( this.dummyData[i].ISBN == isbn ){
+			result = this.dummyData[i];
+			break;
+		}
+	}
+	cb(null, result);
+}
+
 BookProvider.prototype.save = function(book, cb){
 	var bk = null;
 	if( typeof(book.length) == "undefined" ){
@@ -64,9 +75,9 @@ BookProvider.prototype.getList = function(opt, cb){
 		var book = this.dummyData[i];
 		if( !book ) continue;
 		if(keyword){
-			if( book.title.toUpperCase().indexOf(keyword.toUpperCase()) > -1 ){
+			if( book.title.toString().toUpperCase().indexOf(keyword.toUpperCase()) > -1 ){
 				results.push(book);
-			}else if(book.author.toUpperCase().indexOf(keyword.toUpperCase()) > -1 ){
+			}else if(book.author.toString().toUpperCase().indexOf(keyword.toUpperCase()) > -1 ){
 				results.push(book);
 			}
 		}else{

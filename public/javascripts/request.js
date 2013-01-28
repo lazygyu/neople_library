@@ -1,12 +1,12 @@
 function makeEl(item){
 	var li = $("<li class='media well' />");
-	li.append("<a class='pull-left'><img class='media-object img-polaroid' src='http://image.yes24.com/goods/" + item.GOODS_NO + "'></a>");
-	var strbody = "<div class='media-body'><h5 class='media-heading'>";
+	li.append("<a class='pull-left' href='/request/"+item.GOODS_NO+"'><img class='media-object img-polaroid' src='http://image.yes24.com/goods/" + item.GOODS_NO + "'></a>");
+	var strbody = "<div class='media-body'><a href='/request/"+item.GOODS_NO+"'><h5 class='media-heading'>";
 	if( item.SUB_TTL) strbody += "<small>" + item.SUB_TTL + "</small>";
 	strbody += item.GOODS_NM;
 	if( item.COMPANY2 ) strbody += "<span class='label' style='margin-left:1em;'>" + item.COMPANY2.split('`')[0] + "</span>";
 	if( item.SERIES_INFO ) strbody += "<span class='label label-info' style='margin-left:1em;'>" + item.SERIES_INFO + "</span>";
-	strbody += "</h5>";
+	strbody += "</a></h5>";
 	if( item.AUTH_INFO ) strbody += "<div><small>" + item.AUTH_INFO.split('`')[0].replace(/</g, "&lt;") + "</small></div>";
 	strbody += "</div>";
 	li.append(strbody);

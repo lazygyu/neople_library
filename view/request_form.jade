@@ -1,0 +1,90 @@
+extends layout
+
+block content
+	script(type='text/javascript')
+		$(function(){
+			$("#btn_cancel").click(function(){
+				if(!confirm("구매 신청을 취소하시겠습니까?")) return false;
+				history.go(-1);
+			});
+
+			$("input,select").each(function(){
+				$(this).attr("name", $(this).attr("id").replace(/(in_|sel_)/gi, ''));
+			});
+		});
+	div.row-fluid
+		form(method='post',action='/request').span12.form-horizontal
+			legend 도서 구매 신청
+			
+			div.row-fluid
+				div.span4.thumbnail
+					img#thumbnail.img-polaroid(style='width:150px',src='http://image.yes24.com/goods/#{goods_no}')
+					table(align='center')
+						caption 기타 정보
+						tr
+							th ISBN
+							td
+								input#in_ISBN(type='text',value='#{book.ISBN13[0].value}',readonly='readonly')
+						tr
+							th 출판일
+							td
+								input#in_pubDate(type='text',value='#{book.PublishDate[0].value}',readonly='readonly')
+						tr
+							th 출판사
+							td
+								input#in_pubCompany(type='text',value='#{book.MakeCompanyName[0].value}',readonly='readonly')
+						tr
+							th Yes24 번호
+							td
+								input#yes24_id(type='text',value='#{goods_no}',readonly='readonly')
+				div.span8
+					if(book.SubTitle[0].value)
+						div.control-group
+							label.control-label(for='in_subTitle') 부제
+							div.controls
+								input#in_subtitle.input-xxlarge(type='text',value='#{book.SubTitle[0].value}',readonly='readonly')
+					div.control-group
+						label.control-label(for='in_title') 도서 제목
+						div.controls
+							input#in_title.input-xxlarge(type='text',value='#{book.ProductName[0].value}',readonly='readonly')
+					div.control-group
+						label.control-label(for='in_author') 저자
+						div.controls
+							input#in_author.disable(type='text',value='#{book.AuthorName[0].value}',readonly='readonly')
+					if(authorInfo.value)
+						div.control-group
+							label.control-label 저자 소개
+							div.controls
+								blockquote #{authorInfo.value}
+					if(intro.value)
+						div.control-group
+							label.control-label 소개
+							div.controls
+								blockquote #{intro.value}
+					div.control-group
+						label.control-label 신청인 정보
+						div.controls
+							label.inline(for='sel_depart')
+								| 부서&nbsp;
+								select#sel_depart
+									option(value='1') 조커팀
+									option(value='2') 경영기획실
+									option(value='3') 인프라 기술실
+									option(value='4') 조종실
+									option(value='5') 던파개발실
+									option(value='6') 글로벌실
+							label(for='in_name') 
+								| 이름&nbsp;
+								input(type='text',value='')#in_name
+					div.control-group
+						div.controls
+							if(book.SellingStatus[0].value!='판매중')
+								- var avail = false;
+								span.alert.alert-error 현재 이 도서는 '#{book.SellingStatus[0].value}' 상태입니다.
+							else
+								- var avail = true;
+								button#btn_submit.btn.btn-primary(type='submit') 신청
+							&nbsp;
+							button#btn_cancel.btn(type='button') 취소
+				
+					

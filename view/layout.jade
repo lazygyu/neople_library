@@ -3,11 +3,17 @@ html
 	head
 		title Neople 도서관
 		link(rel='stylesheet',href='/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet',href='/stylesheets/style.css')
 		script(type='text/javascript',src='/javascripts/jquery.min.js')
 		script(type='text/javascript',src='/bootstrap/js/bootstrap.min.js')
 		style(type='text/css')
 			body { padding-top:60px; padding-bottom:40px; }
 			.sidebar-nav { padding:9px 0; }
+		script(type='text/javascript')
+			$(function(){
+				var pathname = location.pathname;
+				$("a[href='" + pathname + "']").parent().addClass("active");
+			});
 	body
 		div#topbar.navbar.navbar-inverse.navbar-fixed-top
 			div.navbar-inner
@@ -18,6 +24,10 @@ html
 							a(href='/') Home
 						li
 							a(href='/list') List
+						li
+							a(href='/request') Request
+						li
+							a(href='/admin') Admin
 
 			
 		div#main.container-fluid

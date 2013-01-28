@@ -48,15 +48,15 @@ function ListView(opt){
 		var state = ['success', 'important', 'warning'];
 		var state_label = ['대여가능', '대여중', '입고중'];
 		
-		str = "<a class='pull-left' href='/detail/" + book._id + "'><img class='media-object mainlist' data-src='holder.js/64x64' src='"+book.thumb+"' /></a>";
+		str = "<a class='pull-left' href='/detail/" + book.ISBN + "'><img class='media-object mainlist' data-src='holder.js/64x64' src='http://image.yes24.com/goods/"+book.yes24_id+"' /></a>";
 		str += "<div class='media-body'>";
-		str += "<a href='/detail/" + book._id + "'><h4 class='media-heading'>" + book.title; 
+		if(book.subtitle){
+			str += "<span class='muted'>" + book.subtitle + "</span>";
+		}
+		str += "<a href='/detail/" + book.ISBN + "'><h4 class='media-heading'>" + book.title; 
 		str += "<span class='label label-" + state[book.state] + "' style='margin-left:1em;'>" + state_label[book.state] + "</span>";
 		str += "</h4></a>";
 		str += "<div>저자: " + book.author;
-		if( book.subtitle ){
-			str += " / " + book.subtitle;
-		}
 		str += "</div>";
 		if( book.state == 1 ){
 			str += "대여한 사람 : " + book.rentHistory[book.rentHistory.length-1].name;

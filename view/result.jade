@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	script(type='text/javascript')
+		$(function(){
+			$("#btn_submit").click(function(){
+				location.href= '#{go}';
+			});
+		});
+		
+	div(class=['alert', 'alert-#{state}'])
+		h3 #{state}
+		p #{message}
+		button#btn_submit.btn.btn-primary(type='button') 확인

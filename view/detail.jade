@@ -2,13 +2,12 @@ extends layout
 
 block content
 	div.row-fluid
+		if(book.subtitle)
+			p.muted(style='margin-bottom:0; padding-bottom:0;') #{book.subtitle}
 		h2.span12
-			- if(book)
-				[#{book.title}]
-			- else
-				찾으시는 책이 없습니다.
+			[#{book.title}]
 	div.row-fluid
-		img.thumbnail.span4(src='#{book.thumb}')
+		img.thumbnail.span4(src='http://image.yes24.com/goods/#{book.yes24_id}')
 		div.span8
 			table.table.table-striped
 				tr
@@ -22,6 +21,9 @@ block content
 							span.label.label-warning.label-large 구매 대기중
 				tr
 					th 저자
-					td
-						span #{book.author}
+					td #{book.author}
+				tr
+					th 신청자
+					td #{book.depart} #{book.name}
+						
 
