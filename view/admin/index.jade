@@ -1,0 +1,16 @@
+extends ../layout
+
+block sidebar
+	include ../sidebar.jade
+	div.sidebar-nav
+		ul.nav.nav-list.nav-stack
+			li
+				a(href='/admin/list/state/2') 구매요청 목록
+			li
+				a(href='/admin/lateList') 연체 도서 목록
+			li
+				a(href='/admin/list') 전체 도서 관리
+
+block content
+	h1 도서관 관리
+	

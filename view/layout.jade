@@ -2,6 +2,7 @@ doctype 5
 html
 	head
 		title Neople 도서관
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		link(rel='stylesheet',href='/bootstrap/css/bootstrap.min.css')
 		link(rel='stylesheet',href='/stylesheets/style.css')
 		script(type='text/javascript',src='/javascripts/jquery.min.js')
@@ -33,6 +34,7 @@ html
 		div#main.container-fluid
 			div.row-fluid
 				div.span2
-					include sidebar.jade
+					block sidebar
+						include sidebar.jade
 				div.span10
 					block content

@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+	script(type='text/javascript')
+		$(function(){
+			$("#btn_cancel").click(function(){ location.href = '/'; });
+		});
+	div.well.row-fluid
+		form(method='post',action='/admin').form-horizontal
+			input(type='hidden',name='go',value='#{go}')
+			legend 관리자 로그인
+			div.control-group
+				label.control-label(for='in_pw') 관리자 암호
+				div.controls
+					input#in_pw(type='password',name='pw',placeholder='암호를 입력하세요')
+			div.control-group
+				div.controls
+					button.btn.btn-primary#btn_submit(type='submit') 확인
+					&nbsp;
+					button.btn#btn_cancel(type='button') 취소

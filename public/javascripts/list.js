@@ -23,6 +23,9 @@ function ListView(opt){
 		if( that.set.keyword ){
 			url += '/keyword/' + that.set.keyword;
 		}
+		if( that.set.state !== null && that.set.state !== undefined ){
+			url += '/state/' + that.set.state;
+		}
 		$.ajax({
 				'url':url,
 				'success':that.getListCallback
@@ -84,5 +87,17 @@ var listView = new ListView();
 			listView.set.keyword = key;
 			listView.getList();
 			return false;
+	});
+
+	$("ul#view_type li a").click(function(){
+		var t = $(this).attr("href");
+		var tmp = {};
+		t = t.split('/');
+		for(var i=0,l=t.length;i<l;i+=2){
+			tmp[t[i]] = t[i+1];
+		}
+		listView.set.state = tmp.state;
+		listView.getList();
+		return false;
 	});
 });

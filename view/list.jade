@@ -12,12 +12,17 @@ block content
 				ul.nav
 					li.dropdown
 						a(href='#',data-toggle='dropdown').dropdown-toggle
-							정렬순서
+							상태
 							b.caret
-						ul.dropdown-menu
+						ul#view_type.dropdown-menu
 							li
-								a(href='/list/sort/title') 제목순
-								a(href='/list/sort/date') 구매일자순
-								a(href='/list/sort/author') 저자순
+								a(href='') 전체보기
+							li
+								a(href='state/0') 대여 가능
+							li
+								a(href='state/1') 대여중
+							li
+								a(href='state/2') 구매중
+
 	div#booklist.row-fluid
 		

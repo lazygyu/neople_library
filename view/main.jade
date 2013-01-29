@@ -1,6 +1,21 @@
 extends layout
 
 block content
+	script(type='text/javascript')
+		$(function(){
+			$("#mainFrm").submit(function(e){
+				e.preventDefault();
+				var isbn = $("#isbn").val();
+				if( /[0-9]{13}/.test(isbn)){
+					location.href = '/detail/' + isbn;
+					return false;
+				}else{
+					alert("잘못된 ISBN 코드입니다.");
+					return false;
+				}
+			});
+
+		});
 	div.hero-unit
 		h1 네오플 도서관
 		p
@@ -8,11 +23,23 @@ block content
 	div.row-fluid
 		div.span6
 			h2 도서조회
-			form(method='post',action='/check')
-				input.span10.input-block-level(type='text',placeholder='ISBN 코드를 입력하거나 바코드를 찍어주세요')
+			form#mainFrm(method='post',action='/detail')
+				input#isbn.span10.input-block-level(type='text',placeholder='ISBN 코드를 입력하거나 바코드를 찍어주세요')
 				button.btn.span2.btn-primary.pull-right(type='submit')
 					i.icon-ok.icon-white
 					조회
-		div.span4
-			h2 신간안내
-			
+		div.span4.tabbable
+			ul.nav.nav-tabs
+				li.active
+					a(href='#newbooks',data-toggle='tab') 새로 구매한 책
+				li
+					a(href='#requestbooks',data-toggle='tab') 구매 요청중
+				li
+					a(href='#hotbooks',data-toggle='tab') 인기 도서
+			div.tab-content
+				div#newbooks.tab-pane.active
+					
+				div#requestbooks.tab-pane
+					
+				div#hotbooks.tab-pane
+					

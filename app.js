@@ -11,9 +11,12 @@ var express = require('express')
   
 var app = express();
 var BookProvider = require('./models/bookProvider').BookProvider;
-var bookProvider = new BookProvider();
+var bookProvider = new BookProvider('localhost', 27017);
 var Yes24 = require('./models/yes24').Yes24;
 var yes24 = new Yes24();
+var crypto = require('crypto');
+
+var adminPw = 'dndbtqlcRkfdjaxorb';
 
 app.configure(function(){
   app.set('port', process.env.PORT || 2046);
@@ -22,6 +25,7 @@ app.configure(function(){
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
   app.use(express.methodOverride());
   app.use(express.static(__dirname+'/bootstrap'));
   app.use(app.router);
@@ -42,8 +46,11 @@ app.get('/list', function(req, res){
 
 app.get('/detail/:id', function(req, res){
 		bookProvider.findByISBN(req.params.id, function(err, book){
-			
-			res.render('detail.jade', {'book':book});
+			if(err || !book ){
+				res.render('result.jade', {'state':'error', 'go':'/', 'message':'해당하는 도서를 찾을 수 없습니다!'});
+			}else{
+				res.render('detail.jade', {'book':book});
+			}
 		});
 });
 app.get('/request', function(req, res){
@@ -59,6 +66,34 @@ app.get('/request/:goodsno', function(req, res){
 			'authorInfo':book.Product_Public.ProductContentsSimpleInfo[0].AuthIntro[0]
 		});
 	});
+});
+
+app.get(/^\/admin\/?(.*)/, function(req, res){
+	var hash = crypto.createHash('md5');
+	hash.update(adminPw);
+	if( !req.cookies.admin_verify || req.cookies.admin_verify != hash.digest('hex') ){
+		res.render('admin/admin_login.jade', {go:req.path});
+	}else{
+		res.render(req.path.substr(1));
+	}
+});
+
+app.post('/admin', function(req, res){
+	var hash = crypto.createHash('md5');
+	var in_hash = crypto.createHash('md5');
+	hash.update(adminPw);
+	in_hash.update(req.body.pw);
+	var dig = in_hash.digest('hex');
+	if( dig != hash.digest('hex') ){
+		res.render('result.jade', {'state':'error', 'go':'/admin', 'message':'암호가 틀렸습니다.'});
+	}else{
+		res.cookie('admin_verify', dig);
+		if( req.body.go ){
+			res.redirect(req.body.go);
+		}else{
+			res.redirect('/admin');
+		}
+	}
 });
 
 app.post('/request', function(req, res){
