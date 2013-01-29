@@ -15,6 +15,9 @@ block content
 				}
 			});
 
+			model.getList({target:$("#newbooks"), query:{state:1, sort:'created_at', countPerPage:5}});
+			model.getList({target:$("#requestbooks"), query:{state:2, sort:'created_at|-1', countPerPage:5}});
+
 		});
 	div.hero-unit
 		h1 네오플 도서관

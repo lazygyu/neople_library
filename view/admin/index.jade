@@ -12,16 +12,23 @@ block sidebar
 				a(href='/admin/list') 전체 도서 관리
 
 block content
+	script(type='text/javascript')
+		$(function(){
+				model.getList({query:{state:2, sort:'created_at|-1', countPerPage:5}, target:$("#reqBooks")});
+				model.getList({query:{state:1, sort:'created_at|1', overrent:1, countPerPage:5}, target:$("#overBooks")});
+				model.getList({query:{state:1, sort:'created_at|1', countPerPage:5}, target:$("#rentBooks")});
+		});
 	h1 도서관 관리
 	div.row-fluid
 		div.span4
-			h3 신청 도서
-			div#reqBooks
+			h3 구매요청 도서
+				a.btn.btn-link.btn-mini(href='/admin/list/state/2')더보기
+			div#reqBooks.well
 		div.span4
 			h3 연체 도서
-			div#badBooks
+			div#overBooks.well
 		div.span4
 			h3 대출중 도서
-			div#rentBooks
+			div#rentBooks.well
 
 	

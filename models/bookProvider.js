@@ -137,15 +137,18 @@ BookProvider.prototype.getList = function(opt, cb){
 	
 	if( opt.page ) pages = opt.page;
 	if( opt.method ) method = opt.method;
-	if( opt.countPerPage ) countPerPage = opt.countPerPage;
+	if( opt.countPerPage ) countPerPage = parseInt(opt.countPerPage, 10);
 
 	if( opt.keyword ) query.title = {$regex : opt.keyword, $options:'i'};
+	var tmpsort = {};
 	if( opt.sort ){
 		var tsort = opt.sort.split('|');
-		var tmpsort = {};
 		if(typeof(tsort[1]) == "undefined") tsort[1] = 1;
-		tmpsort[tsort[0]] = tsort[1];
-		query.$orderby = tmpsort;
+		tmpsort[tsort[0]] = parseInt(tsort[1], 10);
+	}
+	if( opt.overrent ){
+		var now = new Date();
+		query.rentHistory = { '$elemMatch' : { 'endDate': {'$gt':now } } };
 	}
 	if( typeof(opt.state) != "undefined" ) query.state = parseInt(opt.state, 10);
 	//query.$skip = (page * countPerPage);
@@ -156,7 +159,7 @@ BookProvider.prototype.getList = function(opt, cb){
 	this.getCollection(function(err, books){
 		if(err) cb(err);
 		else{
-			books.find(query).limit(countPerPage).skip(countPerPage * page).toArray(function(err, results){
+			books.find(query).sort(tmpsort).limit(countPerPage).skip(countPerPage * page).toArray(function(err, results){
 				if( err ) cb(err);
 				else{
 					console.dir(results);
