@@ -140,7 +140,13 @@ BookProvider.prototype.getList = function(opt, cb){
 	if( opt.countPerPage ) countPerPage = opt.countPerPage;
 
 	if( opt.keyword ) query.title = {$regex : opt.keyword, $options:'i'};
-	if( opt.sort ) query.$orderby = opt.sort;
+	if( opt.sort ){
+		var tsort = opt.sort.split('|');
+		var tmpsort = {};
+		if(typeof(tsort[1]) == "undefined") tsort[1] = 1;
+		tmpsort[tsort[0]] = tsort[1];
+		query.$orderby = tmpsort;
+	}
 	if( typeof(opt.state) != "undefined" ) query.state = parseInt(opt.state, 10);
 	//query.$skip = (page * countPerPage);
 	//query.$limit = countPerPage;
